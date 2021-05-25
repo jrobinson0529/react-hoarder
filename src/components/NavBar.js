@@ -16,21 +16,30 @@ const NavBar = ({ user }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
+  const Authenticated = () => (
+    <Nav className="mr-auto" navbar>
+    <NavItem>
+      <Link className="nav-link" to="/home">Home</Link>
+    </NavItem>
+    <NavItem>
+      <Link className="nav-link" to="/stuff">My Stuff</Link>
+    </NavItem>
+    <NavItem>
+      <Link className="nav-link" to="/stuff/new">New</Link>
+    </NavItem>
+  </Nav>
+  );
 
   return (
     <div>
       <Navbar color="dark" dark expand="md">
-        <NavbarBrand href="/">Home</NavbarBrand>
+        <NavbarBrand>Hoarder</NavbarBrand>
         <NavbarToggler onClick={toggle} />
+        {
+          user
+          && <Authenticated />
+        }
         <Collapse isOpen={isOpen} navbar>
-          <Nav className="mr-auto" navbar>
-            <NavItem>
-              <Link className="nav-link" to="/about">About</Link>
-            </NavItem>
-            <NavItem>
-              <Link className="nav-link" to="/users">Users</Link>
-            </NavItem>
-          </Nav>
           { user !== null
             && <div className='auth-btn-container'>
                 {
