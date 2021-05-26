@@ -1,17 +1,27 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import {
   Card, CardImg, CardText, CardBody,
   CardTitle, Button
 } from 'reactstrap';
+import { deleteThing } from '../helpers/data/stuffData';
 
-const StuffCard = ({ ...object }) => {
+const StuffCard = ({ setStuff, ...object }) => {
   const history = useHistory();
-  const viewCard = () => {
-    history.push(`/stuff/${object.firebaseKey}`);
-  };
-  const editCard = () => {
-    history.push(`/edit/${object.firebaseKey}`);
+  const handleClick = (type) => {
+    switch (type) {
+      case 'delete':
+        deleteThing(object.firebaseKey).then(setStuff);
+        break;
+      case 'edit':
+        history.push(`/edit/${object.firebaseKey}`);
+        break;
+      case 'view':
+        history.push(`/stuff/${object.firebaseKey}`);
+        break;
+      default:
+    }
   };
 
   return (
@@ -25,12 +35,16 @@ const StuffCard = ({ ...object }) => {
         <CardBody>
           <CardTitle tag="h5">{object.itemName}</CardTitle>
           <CardText>{object.itemDescription}</CardText>
-          <Button color='primary' onClick={viewCard}>View</Button>
-          <Button color='info' onClick={editCard}>Edit</Button>
+          <Button color='primary' onClick={() => handleClick('view')}>View</Button>
+          <Button color='info' onClick={() => handleClick('edit')}>Edit</Button>
+          <Button color='danger' onClick={() => handleClick('delete')}>Delete</Button>
         </CardBody>
       </Card>
     </div>
   );
+};
+StuffCard.propTypes = {
+  setStuff: PropTypes.func
 };
 
 export default StuffCard;
