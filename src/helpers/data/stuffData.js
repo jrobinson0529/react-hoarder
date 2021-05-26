@@ -17,7 +17,11 @@ const updateThing = (firebaseKey, thingObject) => new Promise((resolve, reject) 
     .then((response) => resolve(response.data))
     .catch((error) => reject(error));
 });
-
+const deleteThing = (firebaseKey) => new Promise((resolve, reject) => {
+  axios.delete(`${dbURL}/stuff/${firebaseKey}.json`)
+    .then(() => getStuff().then(resolve))
+    .catch((error) => reject(error));
+});
 const createStuff = (thing) => new Promise((resolve, reject) => {
   axios.post(`${dbURL}/stuff.json`, thing)
     .then((response) => {
@@ -28,5 +32,5 @@ const createStuff = (thing) => new Promise((resolve, reject) => {
     });
 });
 export {
-  createStuff, getStuff, getThing, updateThing
+  createStuff, getStuff, getThing, updateThing, deleteThing
 };

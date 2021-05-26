@@ -8,7 +8,7 @@ import { createStuff, updateThing } from '../helpers/data/stuffData';
 
 function NewStuffForm({ user, formTitle, ...args }) {
   const [thing, setThing] = useState({
-    firebaseKey: args?.firebaseKey || null,
+    firebaseKey: args.firebaseKey || null,
     itemName: args?.itemName || '',
     itemImage: args?.itemImage || '',
     itemDescription: args?.itemDescription || '',

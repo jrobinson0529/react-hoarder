@@ -4,17 +4,20 @@ import NewStuffForm from '../components/NewStuffForm';
 import { getThing } from '../helpers/data/stuffData';
 
 function Edit() {
-  const [args, setArgs] = useState({});
+  const [thingObject, setThingObject] = useState({});
+  const [editing, setEditing] = useState(false);
   const { id } = useParams();
   useEffect(() => {
-    getThing(id).then(setArgs);
+    getThing(id).then(setThingObject).then(() => {
+      setEditing((prevState) => !prevState);
+    });
   }, []);
   return (
     <div style={{
       padding: '50px',
       margin: '100px',
     }} className='mx-auto'>
-      <NewStuffForm formTitle='Edit Form' {...args}/>
+      { editing && <NewStuffForm formTitle='Edit Form' {...thingObject}/> }
     </div>
   );
 }
